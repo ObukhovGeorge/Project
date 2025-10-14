@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Простой сайт с вводом и регистрацией</title>
+  <style>
+    :root {
+      font-family: Arial, sans-serif;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f4f6f8;
+    }
+    .container {
+      width: min(800px, 95%);
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    header {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    header button {
+      padding: 8px 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    header button.active {
+      background: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+    h1 {
+      color: #222;
+    }
+    input, button {
+      font-size: 16px;
+    }
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    .controls input {
+      flex: 1;
+    }
+    button.primary {
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 20px;
+    }
+    .output img {
+      margin-top: 10px;
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    form button {
+      align-self: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <button id="navHome" class="active">Главная</button>
+      <button id="navReg">Регистрация</button>
+    </header>
+
+    <!-- Главная страница -->
+    <section id="home" class="page active">
+      <h1>Главная страница</h1>
+      <div class="controls">
+        <input type="text" id="userInput" placeholder="Введите текст..." />
+        <button id="showBtn" class="primary">Показать</button>
+      </div>
+      <div class="output" id="output"></div>
+    </section>
+
+    <!-- Страница регистрации -->
+    <section id="register" class="page">
+      <h1>Форма регистрации</h1>
+      <form id="regForm">
+        <label>Фамилия:
+          <input type="text" id="surname" name="surname" required placeholder="Иванов" />
+        </label>
+        <label>Имя:
+          <input type="text" id="firstname" name="firstname" required placeholder="Иван" />
+        </label>
+        <label>Email:
+          <input type="email" id="email" name="email" required placeholder="ivan@example.com" />
+        </label>
+        <button type="submit" class="primary">Отправить</button>
+      </form>
+      <p style="font-size:13px; color:#666; text-align:center;">
+        После отправки данные появятся в консоли браузера (F12 → Console)
+      </p>
+    </section>
+  </div>
+
+  <script>
+    // --- Переключение страниц ---
+    const navHome = document.getElementById('navHome');
+    const navReg = document.getElementById('navReg');
+    const home = document.getElementById('home');
+    const reg = document.getElementById('register');
+
+    navHome.addEventListener('click', () => {
+      home.classList.add('active');
+      reg.classList.remove('active');
+      navHome.classList.add('active');
+      navReg.classList.remove('active');
+    });
+
+    navReg.addEventListener('click', () => {
+      reg.classList.add('active');
+      home.classList.remove('active');
+      navReg.classList.add('active');
+      navHome.classList.remove('active');
+    });
+
+    // --- Главная страница ---
+    const input = document.getElementById('userInput');
+    const showBtn = document.getElementById('showBtn');
+    const output = document.getElementById('output');
+
+    showBtn.addEventListener('click', () => {
+      const text = input.value.trim() || "Вы ничего не ввели!";
+      const p = document.createElement('p');
+      p.textContent = text;
+      const img = document.createElement('img');
+      img.src = "https://via.placeholder.com/300x200.png?text=" + encodeURIComponent(text);
+      img.alt = text;
+      output.appendChild(p);
+      output.appendChild(img);
+      input.value = "";
+    });
+
+    input.addEventListener('keydown', e => {
+      if (e.key === "Enter") showBtn.click();
+    });
+
+    // --- Форма регистрации ---
+    const regForm = document.getElementById('regForm');
+    regForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const data = {
+        surname: regForm.surname.value.trim(),
+        firstname: regForm.firstname.value.trim(),
+        email: regForm.email.value.trim()
+      };
+      console.log("Данные регистрации:", data);
+      alert("Данные отправлены! Проверь консоль (F12 → Console).");
+      regForm.reset();
+    });
+  </script>
+</body>
+</html>
