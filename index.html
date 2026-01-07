@@ -1,0 +1,2988 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanceLearn: Основы финансовых рынков</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-dark: #0a192f;
+            --primary-blue: #112240;
+            --secondary-blue: #1e3a8a;
+            --accent-blue: #3b82f6;
+            --light-blue: #60a5fa;
+            --text-light: #e2e8f0;
+            --text-gray: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --game-green: #22c55e;
+            --game-orange: #f97316;
+            --game-yellow: #eab308;
+            --game-purple: #a855f7;
+            --certificate-gold: #FFD700;
+            --certificate-silver: #C0C0C0;
+        }
+
+        body {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-blue);
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light-blue);
+            cursor: pointer;
+        }
+
+        .logo i {
+            color: var(--accent-blue);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: var(--accent-blue);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Hero Section - Main Page */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            padding: 6rem 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--light-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: var(--light-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+
+        .cta-button.secondary {
+            background-color: var(--secondary-blue);
+        }
+
+        .cta-button.secondary:hover {
+            background-color: #1e40af;
+        }
+
+        /* Topics Section - Main Page */
+        .topics-section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--light-blue);
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background-color: var(--accent-blue);
+            border-radius: 3px;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .topic-card {
+            background-color: var(--primary-blue);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.3s;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-blue);
+        }
+
+        .topic-icon {
+            font-size: 3.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .topic-title {
+            font-size: 2rem;
+            margin-bottom: 1.2rem;
+            color: var(--light-blue);
+        }
+
+        .topic-description {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .topic-button {
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: auto;
+        }
+
+        .topic-button:hover {
+            background-color: var(--light-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Content Pages */
+        .content-page {
+            padding: 4rem 0;
+            min-height: 70vh;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--light-blue);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            background-color: var(--primary-blue);
+            border-radius: 15px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-section h2 {
+            font-size: 2.2rem;
+            color: var(--light-blue);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            color: var(--light-blue);
+            margin: 2rem 0 1rem;
+        }
+
+        .content-section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-gray);
+            margin-bottom: 1.2rem;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: var(--light-blue);
+            font-weight: 600;
+        }
+
+        .key-point {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .content-footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        /* Game Section */
+        .game-section {
+            background: linear-gradient(135deg, #1a472a 0%, #0f2d1a 100%);
+            padding: 4rem 0;
+            border-top: 1px solid rgba(34, 197, 94, 0.2);
+            border-bottom: 1px solid rgba(34, 197, 94, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%2322c55e" opacity="0.05" d="M0,0 L100,0 L100,100 Z"/></svg>');
+            background-size: 200px;
+            opacity: 0.3;
+        }
+
+        .game-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #f0fdf4;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-subtitle {
+            font-size: 1.2rem;
+            color: #bbf7d0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .game-area {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Bunny Area */
+        .bunny-area {
+            background-color: rgba(22, 101, 52, 0.5);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bunny-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin-bottom: 1.5rem;
+        }
+
+        .bunny {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            bottom: 50px;
+            left: 75px;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .bunny-body {
+            position: absolute;
+            width: 100px;
+            height: 80px;
+            background-color: #f8fafc;
+            border-radius: 50% 50% 40% 40%;
+            top: 40px;
+            left: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .bunny-head {
+            position: absolute;
+            width: 70px;
+            height: 60px;
+            background-color: #f8fafc;
+            border-radius: 45% 45% 40% 40%;
+            top: 10px;
+            left: 40px;
+        }
+
+        .bunny-ear {
+            position: absolute;
+            width: 20px;
+            height: 50px;
+            background-color: #f8fafc;
+            border-radius: 10px;
+            top: -30px;
+        }
+
+        .bunny-ear-left {
+            left: 30px;
+            transform: rotate(-10deg);
+        }
+
+        .bunny-ear-right {
+            right: 30px;
+            transform: rotate(10deg);
+        }
+
+        .bunny-ear-inner {
+            position: absolute;
+            width: 12px;
+            height: 30px;
+            background-color: #fda4af;
+            border-radius: 6px;
+            top: 5px;
+            left: 4px;
+        }
+
+        .bunny-eye {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #0f172a;
+            border-radius: 50%;
+            top: 25px;
+        }
+
+        .bunny-eye-left {
+            left: 20px;
+        }
+
+        .bunny-eye-right {
+            right: 20px;
+        }
+
+        .bunny-nose {
+            position: absolute;
+            width: 15px;
+            height: 10px;
+            background-color: #fda4af;
+            border-radius: 50%;
+            top: 40px;
+            left: 27.5px;
+        }
+
+        .bunny-mouth {
+            position: absolute;
+            width: 20px;
+            height: 10px;
+            border-bottom: 3px solid #0f172a;
+            border-radius: 0 0 50% 50%;
+            top: 50px;
+            left: 25px;
+        }
+
+        .bunny-leg {
+            position: absolute;
+            width: 25px;
+            height: 40px;
+            background-color: #f8fafc;
+            border-radius: 40% 40% 30% 30%;
+            bottom: 0;
+        }
+
+        .bunny-leg-front {
+            width: 20px;
+            height: 30px;
+            bottom: 10px;
+        }
+
+        .bunny-leg-front-left {
+            left: 35px;
+        }
+
+        .bunny-leg-front-right {
+            right: 35px;
+        }
+
+        .bunny-leg-back-left {
+            left: 20px;
+        }
+
+        .bunny-leg-back-right {
+            right: 20px;
+        }
+
+        /* Bunny Animation */
+        @keyframes bunnyJump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        @keyframes bunnyHop {
+            0%, 100% { transform: translateX(0) rotate(0); }
+            25% { transform: translateX(-10px) rotate(-5deg); }
+            75% { transform: translateX(10px) rotate(5deg); }
+        }
+
+        @keyframes bunnyEat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.1); }
+        }
+
+        @keyframes bunnyHappy {
+            0%, 100% { transform: rotate(0); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        .bunny.jumping {
+            animation: bunnyJump 1s ease-in-out infinite;
+        }
+
+        .bunny.hopping {
+            animation: bunnyHop 1.5s ease-in-out infinite;
+        }
+
+        .bunny.eating {
+            animation: bunnyEat 0.8s ease-in-out infinite;
+        }
+
+        .bunny.happy {
+            animation: bunnyHappy 0.5s ease-in-out infinite;
+        }
+
+        /* Carrot */
+        .carrot {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            background-color: #f97316;
+            border-radius: 50% 50% 0 0;
+            transform: rotate(-30deg);
+            bottom: 20px;
+            right: 20px;
+            z-index: 1;
+        }
+
+        .carrot::before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 30px;
+            background-color: #22c55e;
+            border-radius: 5px;
+            top: -25px;
+            left: 15px;
+            transform: rotate(15deg);
+        }
+
+        .carrots-count {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f97316;
+            margin-top: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .carrots-label {
+            font-size: 1.2rem;
+            color: #bbf7d0;
+            margin-bottom: 0.5rem;
+        }
+
+        .bunny-message {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #f0fdf4;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Trading Area */
+        .trading-area {
+            background-color: rgba(22, 101, 52, 0.5);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .portfolio {
+            margin-bottom: 2rem;
+        }
+
+        .portfolio-title {
+            font-size: 1.8rem;
+            color: #f0fdf4;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .coins-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .coin-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .coin-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .coin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .coin-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .coin-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #f0fdf4;
+        }
+
+        .coin-symbol {
+            font-size: 0.9rem;
+            color: #bbf7d0;
+        }
+
+        .coin-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .coin-change {
+            font-size: 0.9rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+
+        .positive {
+            color: #22c55e;
+            background-color: rgba(34, 197, 94, 0.1);
+        }
+
+        .negative {
+            color: #ef4444;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .coin-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .trade-btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .buy-btn {
+            background-color: #22c55e;
+            color: white;
+        }
+
+        .buy-btn:hover {
+            background-color: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        .sell-btn {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .sell-btn:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .trade-btn:disabled {
+            background-color: #64748b;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .game-btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .reset-btn {
+            background-color: #f59e0b;
+            color: white;
+        }
+
+        .reset-btn:hover {
+            background-color: #d97706;
+        }
+
+        .auto-trade-btn {
+            background-color: #8b5cf6;
+            color: white;
+        }
+
+        .auto-trade-btn:hover {
+            background-color: #7c3aed;
+        }
+
+        .transaction-log {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .log-title {
+            font-size: 1.3rem;
+            color: #f0fdf4;
+            margin-bottom: 1rem;
+        }
+
+        .log-entry {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .log-time {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Quiz Section */
+        .quiz-page {
+            padding: 4rem 0;
+        }
+
+        .quiz-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .quiz-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .quiz-topic-btn {
+            background-color: var(--secondary-blue);
+            color: var(--text-light);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-topic-btn:hover {
+            background-color: var(--accent-blue);
+            transform: translateY(-3px);
+        }
+
+        .quiz-topic-btn.active {
+            background-color: var(--accent-blue);
+        }
+
+        .quiz-area {
+            background-color: var(--primary-dark);
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: none;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-area.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        .quiz-question {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--light-blue);
+            line-height: 1.4;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .quiz-option {
+            background-color: var(--primary-blue);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        .quiz-option.selected {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .quiz-option.correct {
+            background-color: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+        }
+
+        .quiz-option.incorrect {
+            background-color: rgba(239, 68, 68, 0.2);
+            border-color: var(--danger);
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .quiz-btn {
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-btn:hover {
+            background-color: var(--light-blue);
+        }
+
+        .quiz-btn:disabled {
+            background-color: var(--secondary-blue);
+            cursor: not-allowed;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            display: none;
+            background-color: var(--primary-dark);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .quiz-results.active {
+            display: block;
+        }
+
+        .results-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light-blue);
+        }
+
+        .score {
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .results-feedback {
+            font-size: 1.4rem;
+            color: var(--text-gray);
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Certificate Section */
+        .certificate-section {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0a192f 100%);
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
+
+        .certificate-section.active {
+            display: block;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .certificate-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23FFD700" opacity="0.05" d="M50,5 L60,40 L95,40 L65,60 L75,95 L50,75 L25,95 L35,60 L5,40 L40,40 Z"/></svg>');
+            background-size: 150px;
+            opacity: 0.2;
+        }
+
+        .certificate-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .certificate-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .certificate-title {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            color: #FFD700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .certificate-subtitle {
+            font-size: 1.3rem;
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .certificate-wrapper {
+            perspective: 1000px;
+            margin-bottom: 3rem;
+        }
+
+        .certificate {
+            background: linear-gradient(135deg, #fef9e7 0%, #fef3c7 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
+                        0 0 0 15px #fde68a,
+                        0 0 0 20px #fbbf24,
+                        0 0 0 25px #f59e0b;
+            transform-style: preserve-3d;
+            animation: floatCertificate 6s ease-in-out infinite;
+            border: 2px solid #d97706;
+            overflow: hidden;
+        }
+
+        @keyframes floatCertificate {
+            0%, 100% { transform: translateY(0) rotateY(0deg); }
+            25% { transform: translateY(-10px) rotateY(5deg); }
+            75% { transform: translateY(-5px) rotateY(-5deg); }
+        }
+
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path fill="%23d97706" opacity="0.03" d="M100,20 C140,20 180,40 180,100 C180,160 140,180 100,180 C60,180 20,160 20,100 C20,40 60,20 100,20 Z"/></svg>');
+            background-size: 200px;
+        }
+
+        .certificate-border {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 3px dashed #d97706;
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .certificate-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #1e293b;
+        }
+
+        .certificate-header-text {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #92400e;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 0 #fbbf24;
+            letter-spacing: 3px;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .certificate-subheader {
+            font-size: 1.8rem;
+            color: #78350f;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .certificate-body {
+            margin-bottom: 3rem;
+        }
+
+        .certificate-awarded-to {
+            font-size: 2.2rem;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .certificate-name {
+            font-size: 3.5rem;
+            color: #92400e;
+            margin-bottom: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 0 #fbbf24;
+            padding: 0.5rem;
+            background: linear-gradient(90deg, #fef3c7, #fde68a, #fef3c7);
+            border-radius: 10px;
+            display: inline-block;
+            animation: glowName 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowName {
+            from { box-shadow: 0 0 10px #fbbf24; }
+            to { box-shadow: 0 0 20px #f59e0b; }
+        }
+
+        .certificate-text {
+            font-size: 1.8rem;
+            color: #475569;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .certificate-date {
+            font-size: 1.5rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        .certificate-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-radius: 10px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #fbbf24;
+            min-width: 200px;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #78350f;
+            font-weight: 600;
+        }
+
+        .certificate-signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 3px double #d97706;
+        }
+
+        .signature {
+            text-align: center;
+            flex: 1;
+        }
+
+        .signature-line {
+            width: 200px;
+            height: 1px;
+            background-color: #92400e;
+            margin: 2rem auto 0.5rem;
+        }
+
+        .signature-name {
+            font-size: 1.5rem;
+            color: #92400e;
+            font-weight: 600;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .signature-title {
+            font-size: 1rem;
+            color: #64748b;
+        }
+
+        .certificate-seal {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #dc2626, #b91c1c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+            text-align: center;
+            transform: rotate(15deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 5px solid #fef3c7;
+            animation: spinSeal 20s linear infinite;
+        }
+
+        @keyframes spinSeal {
+            0% { transform: rotate(15deg); }
+            100% { transform: rotate(375deg); }
+        }
+
+        .certificate-controls {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .certificate-btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .print-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .print-btn:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        .share-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+
+        .share-btn:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(29, 78, 216, 0.4);
+        }
+
+        .close-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .close-btn:hover {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-blue);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-tagline {
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .copyright {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            padding-top: 1.5rem;
+        }
+
+        /* Quiz Progress Tracker */
+        .quiz-progress-tracker {
+            background-color: var(--primary-blue);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .quiz-progress-tracker.active {
+            display: block;
+        }
+
+        .progress-title {
+            font-size: 2rem;
+            color: var(--light-blue);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .progress-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .progress-item {
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .progress-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            border: 6px solid var(--secondary-blue);
+        }
+
+        .progress-circle.completed {
+            border-color: var(--success);
+        }
+
+        .progress-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .progress-label {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .progress-status {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-top: 0.5rem;
+        }
+
+        .certificate-notice {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-radius: 10px;
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .certificate-notice.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .notice-text {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .get-certificate-btn {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .get-certificate-btn:hover {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-blue);
+                padding: 1rem;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            }
+
+            .header-content nav.active {
+                display: block;
+            }
+
+            .header-content nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-section, .quiz-area, .bunny-area, .trading-area, .certificate {
+                padding: 1.5rem;
+            }
+
+            .bunny-container {
+                width: 250px;
+                height: 250px;
+            }
+
+            .coin-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .coin-actions {
+                align-self: flex-end;
+            }
+
+            .game-controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .certificate-header-text {
+                font-size: 2.5rem;
+            }
+
+            .certificate-name {
+                font-size: 2.5rem;
+            }
+
+            .certificate-text {
+                font-size: 1.5rem;
+            }
+
+            .certificate-stats {
+                gap: 1rem;
+            }
+
+            .stat-item {
+                min-width: 150px;
+                padding: 1rem;
+            }
+
+            .stat-value {
+                font-size: 2.2rem;
+            }
+
+            .certificate-signatures {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .certificate-controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .certificate-seal {
+                width: 80px;
+                height: 80px;
+                font-size: 0.9rem;
+            }
+
+            .progress-container {
+                flex-direction: column;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header, .hero, .topics-section, .game-section, .quiz-page, footer, .certificate-controls {
+                display: none !important;
+            }
+            
+            .certificate-section {
+                display: block !important;
+                background: white !important;
+                padding: 0 !important;
+            }
+            
+            .certificate {
+                box-shadow: none !important;
+                border: 5px solid #d97706 !important;
+                animation: none !important;
+                margin: 0 !important;
+                padding: 2cm !important;
+                border-radius: 0 !important;
+            }
+            
+            .certificate-seal {
+                animation: none !important;
+            }
+            
+            body {
+                background: white !important;
+                color: black !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo" id="home-link">
+                <i class="fas fa-chart-line"></i>
+                <span>FinanceLearn</span>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a id="nav-home">Главная</a></li>
+                    <li><a id="nav-stocks">Фондовый рынок</a></li>
+                    <li><a id="nav-crypto">Криптовалюта</a></li>
+                    <li><a id="nav-game">Игра</a></li>
+                    <li><a id="nav-quiz">Тесты</a></li>
+                    <li><a id="certificate-nav" style="display: none;">Сертификат</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Page -->
+    <section class="page active" id="home-page">
+        <div class="hero">
+            <div class="container hero-content">
+                <h1>Освойте финансовые рынки</h1>
+                <p>Изучите основы фондового рынка и криптовалют простым и увлекательным способом. Проверьте свои знания с помощью интерактивных тестов и повысьте свою финансовую грамотность.</p>
+                <div class="hero-buttons">
+                    <button class="cta-button" id="direct-to-quiz">Проверить свои знания</button>
+                    <button class="cta-button secondary" id="start-learning">Начать обучение</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="topics-section">
+            <div class="container">
+                <h2 class="section-title">Изучайте темы</h2>
+                <div class="topics-grid">
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="topic-title">Фондовый рынок</h3>
+                        <p class="topic-description">Узнайте, как работают фондовые рынки, что такое акции, облигации и ETF, и как начать инвестировать.</p>
+                        <button class="topic-button" id="learn-stocks">Узнать подробнее</button>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <h3 class="topic-title">Криптовалюта</h3>
+                        <p class="topic-description">Поймите основы блокчейна, биткоина, альткоинов и как безопасно инвестировать в цифровые активы.</p>
+                        <button class="topic-button" id="learn-crypto">Узнать подробнее</button>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3 class="topic-title">Тренировочная игра</h3>
+                        <p class="topic-description">Потренируйтесь в торговле вымышленными криптовалютами с помощью анимированного кролика-трейдера.</p>
+                        <button class="topic-button" id="play-game">Играть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stocks Page -->
+    <section class="page" id="stocks-page">
+        <div class="content-page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Фондовый рынок</h1>
+                    <p>Изучите основы инвестирования в акции и другие ценные бумаги</p>
+                </div>
+                
+                <div class="content-section">
+                    <h2>Что такое фондовый рынок?</h2>
+                    <p>Фондовый рынок — это совокупность бирж и других торговых площадок, где происходит выпуск, покупка и продажа акций публичных компаний. Это механизм, который позволяет компаниям привлекать капитал для развития бизнеса, а инвесторам — становиться совладельцами этих компаний и участвовать в их прибыли.</p>
+                    
+                    <div class="key-point">
+                        <p><strong>Ключевой момент:</strong> Когда вы покупаете акцию компании, вы приобретаете небольшую часть этой компании. Если компания растет и становится более прибыльной, стоимость ваших акций также увеличивается.</p>
+                    </div>
+                    
+                    <h3>Основные понятия фондового рынка</h3>
+                    <ul>
+                        <li><span class="highlight">Акции</span> - доли собственности в компании</li>
+                        <li><span class="highlight">Облигации</span> - долговые обязательства компаний или государств</li>
+                        <li><span class="highlight">ETF</span> - биржевые фонды, которые отслеживают различные индексы или сектора</li>
+                        <li><span class="highlight">Дивиденды</span> - часть прибыли компании, выплачиваемая акционерам</li>
+                        <li><span class="highlight">Бычий рынок</span> - период роста цен на акции</li>
+                        <li><span class="highlight">Медвежий рынок</span> - период падения цен на акции</li>
+                    </ul>
+                    
+                    <h3>Как начать инвестировать?</h3>
+                    <p>Для начала инвестирования вам понадобится:</p>
+                    <ol>
+                        <li>Открыть брокерский счет</li>
+                        <li>Определить свою инвестиционную стратегию</li>
+                        <li>Выбрать акции или ETF для инвестирования</li>
+                        <li>Регулярно пополнять счет и диверсифицировать портфель</li>
+                    </ol>
+                    
+                    <h3>Риски и возможности</h3>
+                    <p>Инвестирование в акции сопряжено с рисками, но также предлагает возможности для роста капитала. Ключевые принципы успешного инвестирования:</p>
+                    <ul>
+                        <li><strong>Диверсификация</strong> - распределение инвестиций между разными активами</li>
+                        <li><strong>Долгосрочная перспектива</strong> - инвестирование на длительный срок</li>
+                        <li><strong>Регулярные инвестиции</strong> - постоянное пополнение портфеля</li>
+                        <li><strong>Обучение</strong> - постоянное изучение рынков и компаний</li>
+                    </ul>
+                </div>
+                
+                <div class="content-footer">
+                    <button class="cta-button" id="take-stocks-quiz">Пройти тест по теме</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crypto Page -->
+    <section class="page" id="crypto-page">
+        <div class="content-page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Криптовалюта и блокчейн</h1>
+                    <p>Изучите мир цифровых валют и децентрализованных технологий</p>
+                </div>
+                
+                <div class="content-section">
+                    <h2>Что такое криптовалюта?</h2>
+                    <p>Криптовалюта — это цифровая или виртуальная валюта, которая использует криптографию для безопасности и работает на технологии блокчейн. В отличие от традиционных валют, выпускаемых центральными банками, криптовалюты обычно децентрализованы и не контролируются каким-либо одним органом.</p>
+                    
+                    <div class="key-point">
+                        <p><strong>Ключевой момент:</strong> Биткоин, созданный в 2009 году, был первой криптовалютой и остается самой известной и капитализированной цифровой валютой в мире.</p>
+                    </div>
+                    
+                    <h3>Технология блокчейн</h3>
+                    <p>Блокчейн — это распределенная база данных, которая хранит информацию в виде цепочки блоков. Каждый блок содержит набор транзакций, и после добавления в цепочку его практически невозможно изменить. Это обеспечивает:</p>
+                    <ul>
+                        <li><span class="highlight">Прозрачность</span> - все транзакции видны всем участникам сети</li>
+                        <li><span class="highlight">Безопасность</span> - данные защищены криптографическими методами</li>
+                        <li><span class="highlight">Децентрализацию</span> - нет единого центра управления</li>
+                        <li><span class="highlight">Неизменяемость</span> - записанные данные нельзя изменить</li>
+                    </ul>
+                    
+                    <h3>Основные криптовалюты</h3>
+                    <ul>
+                        <li><strong>Bitcoin (BTC)</strong> - первая и самая известная криптовалюта, часто называемая "цифровым золотом"</li>
+                        <li><strong>Ethereum (ETH)</strong> - платформа для смарт-контрактов и децентрализованных приложений</li>
+                        <li><strong>Cardano (ADA)</strong> - блокчейн-платформа с акцентом на безопасность и устойчивость</li>
+                        <li><strong>Solana (SOL)</strong> - высокопроизводительный блокчейн с низкими комиссиями</li>
+                        <li><strong>Polkadot (DOT)</strong> - платформа для взаимодействия разных блокчейнов</li>
+                    </ul>
+                    
+                    <h3>Риски криптоинвестирования</h3>
+                    <p>Инвестирование в криптовалюты связано с уникальными рисками:</p>
+                    <ul>
+                        <li><strong>Высокая волатильность</strong> - цены могут резко меняться за короткое время</li>
+                        <li><strong>Регуляторная неопределенность</strong> - законы о криптовалютах постоянно меняются</li>
+                        <li><strong>Технологические риски</strong> - возможны уязвимости в коде или протоколах</li>
+                        <li><strong>Безопасность кошельков</strong> - риск потери доступа к кошелькам</li>
+                        <li><strong>Мошенничество</strong> - множество scams и мошеннических проектов</li>
+                    </ul>
+                    
+                    <h3>Как безопасно инвестировать?</h3>
+                    <ol>
+                        <li>Изучите основы блокчейна и криптовалют</li>
+                        <li>Начните с небольших сумм, которые вы готовы потерять</li>
+                        <li>Используйте надежные биржи и кошельки</li>
+                        <li>Включите двухфакторную аутентификацию</li>
+                        <li>Храните большую часть средств в холодных кошельках</li>
+                        <li>Диверсифицируйте свой криптопортфель</li>
+                    </ol>
+                </div>
+                
+                <div class="content-footer">
+                    <button class="cta-button" id="take-crypto-quiz">Пройти тест по теме</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Page -->
+    <section class="page" id="game-page">
+        <div class="game-section">
+            <div class="container game-container">
+                <div class="game-header">
+                    <h2 class="game-title">Игра: Кролик-трейдер</h2>
+                    <p class="game-subtitle">Торгуйте вымышленными криптовалютами за морковки с помощью анимированного кролика!</p>
+                </div>
+                
+                <div class="game-area">
+                    <div class="bunny-area">
+                        <div class="bunny-container">
+                            <div class="bunny jumping" id="bunny">
+                                <div class="bunny-body"></div>
+                                <div class="bunny-head">
+                                    <div class="bunny-ear bunny-ear-left">
+                                        <div class="bunny-ear-inner"></div>
+                                    </div>
+                                    <div class="bunny-ear bunny-ear-right">
+                                        <div class="bunny-ear-inner"></div>
+                                    </div>
+                                    <div class="bunny-eye bunny-eye-left"></div>
+                                    <div class="bunny-eye bunny-eye-right"></div>
+                                    <div class="bunny-nose"></div>
+                                    <div class="bunny-mouth"></div>
+                                </div>
+                                <div class="bunny-leg bunny-leg-front bunny-leg-front-left"></div>
+                                <div class="bunny-leg bunny-leg-front bunny-leg-front-right"></div>
+                                <div class="bunny-leg bunny-leg-back-left"></div>
+                                <div class="bunny-leg bunny-leg-back-right"></div>
+                            </div>
+                            <div class="carrot" id="carrot"></div>
+                        </div>
+                        
+                        <div class="carrots-label">Мои морковки:</div>
+                        <div class="carrots-count" id="carrots-count">10</div>
+                        
+                        <div class="bunny-message" id="bunny-message">
+                            Привет! Я кролик-трейдер. Купи дешево, продай дорого и заработай много морковок!
+                        </div>
+                    </div>
+                    
+                    <div class="trading-area">
+                        <div class="portfolio">
+                            <h3 class="portfolio-title">Торговля криптовалютами</h3>
+                            <div class="coins-list" id="coins-list">
+                                <!-- Coin items will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="game-controls">
+                            <button class="game-btn reset-btn" id="reset-game">Новая игра</button>
+                            <button class="game-btn auto-trade-btn" id="auto-trade">Авто-торговля</button>
+                        </div>
+                        
+                        <div class="transaction-log">
+                            <h4 class="log-title">История операций</h4>
+                            <div id="transaction-log">
+                                <div class="log-entry">Добро пожаловать в игру! У вас есть 10 морковок.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Page -->
+    <section class="page" id="quiz-page">
+        <div class="quiz-page">
+            <div class="container">
+                <div class="quiz-header">
+                    <h2 class="section-title">Проверьте свои знания</h2>
+                    <p>Пройдите тесты, чтобы оценить свое понимание концепций фондового рынка и криптовалют.</p>
+                </div>
+                
+                <div class="quiz-progress-tracker" id="quiz-progress-tracker">
+                    <h3 class="progress-title">Ваш прогресс по тестам</h3>
+                    <div class="progress-container">
+                        <div class="progress-item">
+                            <div class="progress-circle" id="progress-stocks">
+                                <div class="progress-value">0/10</div>
+                            </div>
+                            <div class="progress-label">Фондовый рынок</div>
+                            <div class="progress-status" id="status-stocks">Не начат</div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-circle" id="progress-crypto">
+                                <div class="progress-value">0/10</div>
+                            </div>
+                            <div class="progress-label">Криптовалюта</div>
+                            <div class="progress-status" id="status-crypto">Не начат</div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-circle" id="progress-strategies">
+                                <div class="progress-value">0/10</div>
+                            </div>
+                            <div class="progress-label">Стратегии</div>
+                            <div class="progress-status" id="status-strategies">Не начат</div>
+                        </div>
+                    </div>
+                    
+                    <div class="certificate-notice" id="certificate-notice">
+                        <p class="notice-text">Поздравляем! Вы успешно прошли все тесты и можете получить сертификат об окончании курса!</p>
+                        <button class="get-certificate-btn" id="get-certificate-btn">Получить сертификат</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-selector">
+                    <button class="quiz-topic-btn active" data-quiz="stocks-basics">Основы фондового рынка</button>
+                    <button class="quiz-topic-btn" data-quiz="crypto-basics">Основы криптовалют</button>
+                    <button class="quiz-topic-btn" data-quiz="investment-strategies">Инвестиционные стратегии</button>
+                </div>
+                
+                <!-- Stock Market Quiz -->
+                <div class="quiz-area active" id="stocks-basics-quiz">
+                    <div class="quiz-progress">
+                        <span class="quiz-count">Вопрос <span id="current-question-1">1</span>/10</span>
+                        <span class="quiz-score">Счет: <span id="score-1">0</span>/10</span>
+                    </div>
+                    <h3 class="quiz-question" id="question-1">Что означает аббревиатура IPO?</h3>
+                    <div class="quiz-options" id="options-1">
+                        <!-- Options will be populated by JavaScript -->
+                    </div>
+                    <div class="quiz-controls">
+                        <button class="quiz-btn" id="prev-btn-1" disabled>Назад</button>
+                        <button class="quiz-btn" id="next-btn-1">Следующий вопрос</button>
+                    </div>
+                </div>
+                
+                <!-- Cryptocurrency Quiz -->
+                <div class="quiz-area" id="crypto-basics-quiz">
+                    <div class="quiz-progress">
+                        <span class="quiz-count">Вопрос <span id="current-question-2">1</span>/10</span>
+                        <span class="quiz-score">Счет: <span id="score-2">0</span>/10</span>
+                    </div>
+                    <h3 class="quiz-question" id="question-2">Какая технология лежит в основе большинства криптовалют?</h3>
+                    <div class="quiz-options" id="options-2">
+                        <!-- Options will be populated by JavaScript -->
+                    </div>
+                    <div class="quiz-controls">
+                        <button class="quiz-btn" id="prev-btn-2" disabled>Назад</button>
+                        <button class="quiz-btn" id="next-btn-2">Следующий вопрос</button>
+                    </div>
+                </div>
+                
+                <!-- Investment Strategies Quiz -->
+                <div class="quiz-area" id="investment-strategies-quiz">
+                    <div class="quiz-progress">
+                        <span class="quiz-count">Вопрос <span id="current-question-3">1</span>/10</span>
+                        <span class="quiz-score">Счет: <span id="score-3">0</span>/10</span>
+                    </div>
+                    <h3 class="quiz-question" id="question-3">Какая инвестиционная стратегия предполагает инвестирование фиксированных сумм через регулярные промежутки времени?</h3>
+                    <div class="quiz-options" id="options-3">
+                        <!-- Options will be populated by JavaScript -->
+                    </div>
+                    <div class="quiz-controls">
+                        <button class="quiz-btn" id="prev-btn-3" disabled>Назад</button>
+                        <button class="quiz-btn" id="next-btn-3">Следующий вопрос</button>
+                    </div>
+                </div>
+                
+                <!-- Results Display -->
+                <div class="quiz-results" id="quiz-results">
+                    <h3 class="results-title">Тест завершен!</h3>
+                    <div class="score" id="final-score">0/10</div>
+                    <p class="results-feedback" id="results-feedback">Продолжайте учиться, чтобы улучшить свои финансовые знания!</p>
+                    <button class="quiz-btn" id="restart-quiz">Пройти другой тест</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificate Section -->
+    <section class="certificate-section" id="certificate-page">
+        <div class="container certificate-container">
+            <div class="certificate-header">
+                <h2 class="certificate-title">Сертификат об окончании</h2>
+                <p class="certificate-subtitle">Поздравляем с успешным завершением курса по основам финансовых рынков!</p>
+            </div>
+            
+            <div class="certificate-wrapper">
+                <div class="certificate">
+                    <div class="certificate-border"></div>
+                    <div class="certificate-seal">
+                        УСПЕШНО<br>ЗАВЕРШЕНО
+                    </div>
+                    <div class="certificate-content">
+                        <h1 class="certificate-header-text">СЕРТИФИКАТ</h1>
+                        <div class="certificate-subheader">о прохождении курса</div>
+                        
+                        <div class="certificate-body">
+                            <div class="certificate-awarded-to">Награждается</div>
+                            <div class="certificate-name" id="certificate-user-name">Иван Иванов</div>
+                            <div class="certificate-text">
+                                за успешное прохождение курса «Основы фондового рынка и криптовалют» и демонстрацию отличных знаний в области финансовой грамотности
+                            </div>
+                            <div class="certificate-date" id="certificate-date">Дата: 15 ноября 2023 г.</div>
+                            
+                            <div class="certificate-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value" id="stat-stocks">0/10</div>
+                                    <div class="stat-label">Фондовый рынок</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" id="stat-crypto">0/10</div>
+                                    <div class="stat-label">Криптовалюта</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" id="stat-strategies">0/10</div>
+                                    <div class="stat-label">Стратегии</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" id="stat-total">0/30</div>
+                                    <div class="stat-label">Общий балл</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="certificate-signatures">
+                            <div class="signature">
+                                <div class="signature-line"></div>
+                                <div class="signature-name">Алексей Финансов</div>
+                                <div class="signature-title">Главный инструктор курса</div>
+                            </div>
+                            <div class="signature">
+                                <div class="signature-line"></div>
+                                <div class="signature-name">Мария Инвесторова</div>
+                                <div class="signature-title">Директор FinanceLearn</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="certificate-controls">
+                <button class="certificate-btn print-btn" id="print-certificate">
+                    <i class="fas fa-print"></i> Распечатать сертификат
+                </button>
+                <button class="certificate-btn share-btn" id="share-certificate">
+                    <i class="fas fa-share-alt"></i> Поделиться
+                </button>
+                <button class="certificate-btn close-btn" id="close-certificate">
+                    <i class="fas fa-times"></i> Закрыть
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-chart-line"></i> FinanceLearn
+            </div>
+            <p class="footer-tagline">Повышение финансовой грамотности через доступное образование о фондовых рынках и криптовалютах.</p>
+            <div class="copyright">
+                <p>все выше сказанное не является ИР, удачи вам освоить рынки в дальнейшем</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation System
+        const pages = {
+            'home': document.getElementById('home-page'),
+            'stocks': document.getElementById('stocks-page'),
+            'crypto': document.getElementById('crypto-page'),
+            'game': document.getElementById('game-page'),
+            'quiz': document.getElementById('quiz-page'),
+            'certificate': document.getElementById('certificate-page')
+        };
+
+        // Navigation buttons
+        const navButtons = {
+            'home': document.getElementById('nav-home'),
+            'stocks': document.getElementById('nav-stocks'),
+            'crypto': document.getElementById('nav-crypto'),
+            'game': document.getElementById('nav-game'),
+            'quiz': document.getElementById('nav-quiz'),
+            'certificate': document.getElementById('certificate-nav')
+        };
+
+        // Main page buttons
+        const homeButtons = {
+            'directToQuiz': document.getElementById('direct-to-quiz'),
+            'startLearning': document.getElementById('start-learning'),
+            'learnStocks': document.getElementById('learn-stocks'),
+            'learnCrypto': document.getElementById('learn-crypto'),
+            'playGame': document.getElementById('play-game')
+        };
+
+        // Content page buttons
+        const contentButtons = {
+            'takeStocksQuiz': document.getElementById('take-stocks-quiz'),
+            'takeCryptoQuiz': document.getElementById('take-crypto-quiz')
+        };
+
+        // Initialize page navigation
+        function initNavigation() {
+            // Show home page by default
+            showPage('home');
+            
+            // Set up navigation buttons
+            for (const [pageName, button] of Object.entries(navButtons)) {
+                if (button) {
+                    button.addEventListener('click', () => showPage(pageName));
+                }
+            }
+            
+            // Set up home page buttons
+            homeButtons.directToQuiz.addEventListener('click', () => {
+                showPage('quiz');
+            });
+            
+            homeButtons.startLearning.addEventListener('click', () => {
+                // Scroll to topics section
+                document.querySelector('.topics-section').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            homeButtons.learnStocks.addEventListener('click', () => {
+                showPage('stocks');
+            });
+            
+            homeButtons.learnCrypto.addEventListener('click', () => {
+                showPage('crypto');
+            });
+            
+            homeButtons.playGame.addEventListener('click', () => {
+                showPage('game');
+            });
+            
+            // Set up content page buttons
+            contentButtons.takeStocksQuiz.addEventListener('click', () => {
+                showPage('quiz');
+                // Activate stocks quiz
+                setTimeout(() => {
+                    initQuiz('stocks-basics');
+                }, 100);
+            });
+            
+            contentButtons.takeCryptoQuiz.addEventListener('click', () => {
+                showPage('quiz');
+                // Activate crypto quiz
+                setTimeout(() => {
+                    initQuiz('crypto-basics');
+                }, 100);
+            });
+            
+            // Home link in logo
+            document.getElementById('home-link').addEventListener('click', () => {
+                showPage('home');
+            });
+        }
+
+        // Show specific page and hide others
+        function showPage(pageName) {
+            // Hide all pages
+            for (const page of Object.values(pages)) {
+                page.classList.remove('active');
+            }
+            
+            // Show selected page
+            if (pages[pageName]) {
+                pages[pageName].classList.add('active');
+                
+                // If showing quiz page, show progress tracker if any quizzes completed
+                if (pageName === 'quiz') {
+                    const anyCompleted = Object.values(quizResults).some(quiz => quiz.completed);
+                    if (anyCompleted) {
+                        document.getElementById('quiz-progress-tracker').classList.add('active');
+                        updateProgressUI();
+                    }
+                }
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            // Close mobile menu if open
+            document.getElementById('mainNav').classList.remove('active');
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+
+        // Game variables
+        let carrots = 10;
+        let coins = [];
+        let portfolio = {};
+        let transactionHistory = [];
+        let autoTradeInterval = null;
+        let bunnyAnimation = "jumping";
+        
+        // Certificate and quiz progress variables
+        let quizResults = {
+            'stocks-basics': { completed: false, score: 0, total: 10 },
+            'crypto-basics': { completed: false, score: 0, total: 10 },
+            'investment-strategies': { completed: false, score: 0, total: 10 }
+        };
+        
+        let userName = localStorage.getItem('financeLearnUserName') || '';
+        let certificateEarned = false;
+
+        // Initialize coins
+        const coinDefinitions = [
+            { id: 'buncoin', name: 'Банкоин', symbol: 'BNC', color: '#f59e0b', emoji: '🐰', basePrice: 2 },
+            { id: 'carrotcoin', name: 'Моркоин', symbol: 'CRC', color: '#f97316', emoji: '🥕', basePrice: 1 },
+            { id: 'hopcoin', name: 'Прыжкоин', symbol: 'HPC', color: '#22c55e', emoji: '🦘', basePrice: 3 },
+            { id: 'earcoin', name: 'Ушкоин', symbol: 'ERC', color: '#a855f7', emoji: '👂', basePrice: 4 },
+            { id: 'leafcoin', name: 'Листкоин', symbol: 'LFC', color: '#10b981', emoji: '🍃', basePrice: 2.5 }
+        ];
+
+        // Initialize the game
+        function initGame() {
+            carrots = 10;
+            portfolio = {};
+            transactionHistory = [{ time: getCurrentTime(), message: 'Добро пожаловать в игру! У вас есть 10 морковок.' }];
+            
+            // Initialize coins with random prices
+            coins = coinDefinitions.map(coin => ({
+                ...coin,
+                price: (coin.basePrice * (0.8 + Math.random() * 0.4)).toFixed(2),
+                change: 0,
+                owned: 0
+            }));
+            
+            updateGameUI();
+            updateTransactionLog();
+            setBunnyAnimation('jumping');
+            updateBunnyMessage('Привет! Я кролик-трейдер. Купи дешево, продай дорого и заработай много морковок!');
+        }
+
+        // Update game UI
+        function updateGameUI() {
+            // Update carrots count
+            document.getElementById('carrots-count').textContent = carrots;
+            
+            // Update coins list
+            const coinsList = document.getElementById('coins-list');
+            coinsList.innerHTML = '';
+            
+            coins.forEach(coin => {
+                const coinElement = document.createElement('div');
+                coinElement.className = 'coin-item';
+                coinElement.innerHTML = `
+                    <div class="coin-info">
+                        <div class="coin-icon" style="background-color: ${coin.color}">${coin.emoji}</div>
+                        <div>
+                            <div class="coin-name">${coin.name} <span class="coin-symbol">(${coin.symbol})</span></div>
+                            <div>Владеете: ${portfolio[coin.id] || 0}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="coin-price">${coin.price} морковок
+                            <span class="coin-change ${coin.change >= 0 ? 'positive' : 'negative'}">
+                                ${coin.change >= 0 ? '+' : ''}${coin.change.toFixed(2)}%
+                            </span>
+                        </div>
+                        <div class="coin-actions">
+                            <button class="trade-btn buy-btn" onclick="buyCoin('${coin.id}')" ${carrots < coin.price ? 'disabled' : ''}>Купить 1</button>
+                            <button class="trade-btn sell-btn" onclick="sellCoin('${coin.id}')" ${!(portfolio[coin.id] > 0) ? 'disabled' : ''}>Продать 1</button>
+                        </div>
+                    </div>
+                `;
+                coinsList.appendChild(coinElement);
+            });
+        }
+
+        // Buy a coin
+        function buyCoin(coinId) {
+            const coin = coins.find(c => c.id === coinId);
+            const price = parseFloat(coin.price);
+            
+            if (carrots >= price) {
+                // Update portfolio
+                portfolio[coin.id] = (portfolio[coin.id] || 0) + 1;
+                
+                // Update carrots
+                carrots -= price;
+                
+                // Add transaction to history
+                transactionHistory.unshift({
+                    time: getCurrentTime(),
+                    message: `Куплен 1 ${coin.name} (${coin.symbol}) за ${price.toFixed(2)} морковок`
+                });
+                
+                // Update UI
+                updateGameUI();
+                updateTransactionLog();
+                
+                // Bunny animation and message
+                setBunnyAnimation('eating');
+                updateBunnyMessage(`Куплен ${coin.name}! Надеюсь, его цена вырастет!`);
+                
+                // Play sound effect (simulated)
+                playSoundEffect('buy');
+            } else {
+                updateBunnyMessage('У вас недостаточно морковок для покупки!');
+                setBunnyAnimation('hopping');
+            }
+        }
+
+        // Sell a coin
+        function sellCoin(coinId) {
+            const coin = coins.find(c => c.id === coinId);
+            const price = parseFloat(coin.price);
+            
+            if (portfolio[coin.id] > 0) {
+                // Update portfolio
+                portfolio[coin.id] -= 1;
+                
+                // Update carrots
+                carrots += price;
+                
+                // Add transaction to history
+                transactionHistory.unshift({
+                    time: getCurrentTime(),
+                    message: `Продан 1 ${coin.name} (${coin.symbol}) за ${price.toFixed(2)} морковок`
+                });
+                
+                // Update UI
+                updateGameUI();
+                updateTransactionLog();
+                
+                // Bunny animation and message
+                setBunnyAnimation('happy');
+                updateBunnyMessage(`Продан ${coin.name}! Хорошая сделка!`);
+                
+                // Play sound effect (simulated)
+                playSoundEffect('sell');
+            }
+        }
+
+        // Update coin prices randomly
+        function updateCoinPrices() {
+            coins.forEach(coin => {
+                const oldPrice = parseFloat(coin.price);
+                const changePercent = (Math.random() - 0.5) * 10; // -5% to +5%
+                const newPrice = oldPrice * (1 + changePercent / 100);
+                
+                coin.price = newPrice.toFixed(2);
+                coin.change = changePercent;
+            });
+            
+            updateGameUI();
+        }
+
+        // Auto-trade function
+        function autoTrade() {
+            if (coins.length === 0) return;
+            
+            // Randomly decide to buy or sell
+            const action = Math.random() > 0.5 ? 'buy' : 'sell';
+            const randomCoin = coins[Math.floor(Math.random() * coins.length)];
+            
+            if (action === 'buy' && carrots >= parseFloat(randomCoin.price)) {
+                buyCoin(randomCoin.id);
+            } else if (action === 'sell' && portfolio[randomCoin.id] > 0) {
+                sellCoin(randomCoin.id);
+            }
+        }
+
+        // Set bunny animation
+        function setBunnyAnimation(animation) {
+            const bunny = document.getElementById('bunny');
+            bunny.classList.remove('jumping', 'hopping', 'eating', 'happy');
+            bunny.classList.add(animation);
+            bunnyAnimation = animation;
+        }
+
+        // Update bunny message
+        function updateBunnyMessage(message) {
+            document.getElementById('bunny-message').textContent = message;
+        }
+
+        // Update transaction log
+        function updateTransactionLog() {
+            const logContainer = document.getElementById('transaction-log');
+            logContainer.innerHTML = '';
+            
+            transactionHistory.slice(0, 10).forEach(entry => {
+                const logEntry = document.createElement('div');
+                logEntry.className = 'log-entry';
+                logEntry.innerHTML = `<span class="log-time">${entry.time}</span> ${entry.message}`;
+                logContainer.appendChild(logEntry);
+            });
+        }
+
+        // Get current time for transactions
+        function getCurrentTime() {
+            const now = new Date();
+            return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+        }
+
+        // Play sound effect (simulated with console message)
+        function playSoundEffect(type) {
+            console.log(`Playing ${type} sound effect`);
+            // In a real implementation, you would play an actual sound file
+        }
+
+        // Update quiz progress
+        function updateQuizProgress(quizId, score) {
+            quizResults[quizId].completed = true;
+            quizResults[quizId].score = score;
+            
+            // Update progress circles
+            updateProgressUI();
+            
+            // Show progress tracker on quiz page
+            document.getElementById('quiz-progress-tracker').classList.add('active');
+            
+            // Check if all quizzes are completed with at least 7/10
+            checkCertificateEligibility();
+        }
+
+        // Update progress UI
+        function updateProgressUI() {
+            // Stocks quiz
+            const stocksProgress = document.getElementById('progress-stocks');
+            const stocksStatus = document.getElementById('status-stocks');
+            const stocksScore = quizResults['stocks-basics'].score;
+            
+            stocksProgress.querySelector('.progress-value').textContent = `${stocksScore}/10`;
+            if (quizResults['stocks-basics'].completed) {
+                stocksProgress.classList.add('completed');
+                stocksStatus.textContent = stocksScore >= 7 ? 'Успешно пройден' : 'Пройден';
+                stocksStatus.style.color = stocksScore >= 7 ? 'var(--success)' : 'var(--warning)';
+            }
+            
+            // Crypto quiz
+            const cryptoProgress = document.getElementById('progress-crypto');
+            const cryptoStatus = document.getElementById('status-crypto');
+            const cryptoScore = quizResults['crypto-basics'].score;
+            
+            cryptoProgress.querySelector('.progress-value').textContent = `${cryptoScore}/10`;
+            if (quizResults['crypto-basics'].completed) {
+                cryptoProgress.classList.add('completed');
+                cryptoStatus.textContent = cryptoScore >= 7 ? 'Успешно пройден' : 'Пройден';
+                cryptoStatus.style.color = cryptoScore >= 7 ? 'var(--success)' : 'var(--warning)';
+            }
+            
+            // Strategies quiz
+            const strategiesProgress = document.getElementById('progress-strategies');
+            const strategiesStatus = document.getElementById('status-strategies');
+            const strategiesScore = quizResults['investment-strategies'].score;
+            
+            strategiesProgress.querySelector('.progress-value').textContent = `${strategiesScore}/10`;
+            if (quizResults['investment-strategies'].completed) {
+                strategiesProgress.classList.add('completed');
+                strategiesStatus.textContent = strategiesScore >= 7 ? 'Успешно пройден' : 'Пройден';
+                strategiesStatus.style.color = strategiesScore >= 7 ? 'var(--success)' : 'var(--warning)';
+            }
+        }
+
+        // Check if user is eligible for certificate
+        function checkCertificateEligibility() {
+            const allCompleted = Object.values(quizResults).every(quiz => quiz.completed);
+            const allPassed = Object.values(quizResults).every(quiz => quiz.score >= 7);
+            
+            if (allCompleted && allPassed && !certificateEarned) {
+                document.getElementById('certificate-notice').classList.add('active');
+                document.getElementById('certificate-nav').style.display = 'block';
+            }
+        }
+
+        // Show certificate
+        function showCertificate() {
+            // Ask for user name if not already set
+            if (!userName) {
+                userName = prompt('Пожалуйста, введите ваше имя для сертификата:', 'Иван Иванов');
+                if (userName) {
+                    localStorage.setItem('financeLearnUserName', userName);
+                } else {
+                    userName = 'Участник курса';
+                }
+            }
+            
+            // Update certificate with user data
+            document.getElementById('certificate-user-name').textContent = userName;
+            
+            // Set current date
+            const now = new Date();
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            const dateString = now.toLocaleDateString('ru-RU', options);
+            document.getElementById('certificate-date').textContent = `Дата: ${dateString}`;
+            
+            // Update stats
+            document.getElementById('stat-stocks').textContent = `${quizResults['stocks-basics'].score}/10`;
+            document.getElementById('stat-crypto').textContent = `${quizResults['crypto-basics'].score}/10`;
+            document.getElementById('stat-strategies').textContent = `${quizResults['investment-strategies'].score}/10`;
+            
+            const totalScore = quizResults['stocks-basics'].score + 
+                              quizResults['crypto-basics'].score + 
+                              quizResults['investment-strategies'].score;
+            document.getElementById('stat-total').textContent = `${totalScore}/30`;
+            
+            // Show certificate section
+            showPage('certificate');
+            certificateEarned = true;
+        }
+
+        // Initialize the game when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize navigation
+            initNavigation();
+            
+            // Initialize game
+            initGame();
+            
+            // Set up auto price updates
+            setInterval(updateCoinPrices, 3000);
+            
+            // Game control event listeners
+            document.getElementById('reset-game').addEventListener('click', function() {
+                initGame();
+                updateBunnyMessage('Новая игра началась! У вас 10 морковок.');
+            });
+            
+            document.getElementById('auto-trade').addEventListener('click', function() {
+                const button = this;
+                if (autoTradeInterval) {
+                    clearInterval(autoTradeInterval);
+                    autoTradeInterval = null;
+                    button.textContent = 'Авто-торговля';
+                    updateBunnyMessage('Авто-торговля остановлена!');
+                } else {
+                    autoTradeInterval = setInterval(autoTrade, 2000);
+                    button.textContent = 'Остановить авто-торговлю';
+                    updateBunnyMessage('Авто-торговля запущена! Кролик торгует за вас!');
+                }
+            });
+            
+            // Certificate event listeners
+            document.getElementById('get-certificate-btn').addEventListener('click', showCertificate);
+            document.getElementById('print-certificate').addEventListener('click', function() {
+                window.print();
+            });
+            
+            document.getElementById('share-certificate').addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Мой сертификат FinanceLearn',
+                        text: `Я успешно прошел курс по основам фондового рынка и криптовалют на FinanceLearn!`,
+                        url: window.location.href
+                    });
+                } else {
+                    alert('Скопируйте ссылку на эту страницу, чтобы поделиться сертификатом!');
+                }
+            });
+            
+            document.getElementById('close-certificate').addEventListener('click', function() {
+                showPage('home');
+            });
+            
+            // Certificate navigation
+            document.getElementById('certificate-nav').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (certificateEarned) {
+                    showCertificate();
+                } else {
+                    alert('Сначала пройдите все тесты с результатом не менее 7/10 для каждого!');
+                }
+            });
+            
+            // Quiz data and functionality
+            const quizData = {
+                'stocks-basics': {
+                    title: 'Основы фондового рынка',
+                    questions: [
+                        {
+                            question: 'Что означает аббревиатура IPO?',
+                            options: ['Первичное публичное предложение', 'Международная опция покупки', 'Инвестиционная возможность портфеля', 'Индивидуальный заказ на покупку'],
+                            answer: 0
+                        },
+                        {
+                            question: 'Что такое бычий рынок?',
+                            options: ['Период падения цен на акции', 'Рынок сельскохозяйственных товаров', 'Период роста цен на акции', 'Рынок с высокой волатильностью'],
+                            answer: 2
+                        },
+                        {
+                            question: 'Что означает коэффициент P/E?',
+                            options: ['Коэффициент цена/прибыль', 'Коэффициент прибыль/собственный капитал', 'Коэффициент покупка/расходы', 'Коэффициент портфель/собственный капитал'],
+                            answer: 0
+                        },
+                        {
+                            question: 'Какой тип акций обычно дает право голоса?',
+                            options: ['Привилегированные акции', 'Обыкновенные акции', 'Оба типа дают право голоса', 'Ни один не дает права голоса'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Что такое рыночная капитализация?',
+                            options: ['Общая стоимость всех акций, торгуемых за день', 'Цена одной акции', 'Общая стоимость выпущенных акций компании', 'Капитал, необходимый для выхода на рынок'],
+                            answer: 2
+                        },
+                        {
+                            question: 'Что такое дивиденды?',
+                            options: ['Тип акций', 'Комиссия, уплачиваемая брокерам', 'Периодические выплаты акционерам из прибыли', 'Налог на продажу акций'],
+                            answer: 2
+                        },
+                        {
+                            question: 'Что такое медвежий рынок?',
+                            options: ['Рынок товаров, связанных с медведями', 'Период роста цен на акции', 'Период падения цен на акции', 'Высоковолатильный рынок'],
+                            answer: 2
+                        },
+                        {
+                            question: 'Что означает аббревиатура ETF?',
+                            options: ['Электронный торговый фонд', 'Биржевой инвестиционный фонд', 'Фонд передачи акций', 'Заработок через финансирование'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Какая инвестиция предлагает наибольшую диверсификацию?',
+                            options: ['Отдельная акция', 'Индексный фонд', 'Привилегированная акция', 'Облигации'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Что такое голубые фишки?',
+                            options: ['Акции новых компаний', 'Акции крупных, хорошо зарекомендовавших себя компаний', 'Акции с сертификатами синего цвета', 'Акции, которые не выплачивают дивиденды'],
+                            answer: 1
+                        }
+                    ]
+                },
+                'crypto-basics': {
+                    title: 'Основы криптовалют',
+                    questions: [
+                        {
+                            question: 'Какая технология лежит в основе большинства криптовалют?',
+                            options: ['Облачные вычисления', 'Блокчейн', 'Искусственный интеллект', 'Квантовые вычисления'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Кто создал Биткоин?',
+                            options: ['Илон Маск', 'Виталик Бутерин', 'Сатоши Накамото', 'Уоррен Баффет'],
+                            answer: 2
+                        },
+                        {
+                            question: 'Что такое смарт-контракт?',
+                            options: ['Юридически обязывающее соглашение', 'Контракт, который автоматически выполняется при выполнении условий', 'Контракт для умных устройств', 'Контракт с интеллектуальными пунктами'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Какую криптовалюту называют "цифровым золотом"?',
+                            options: ['Ethereum', 'Dogecoin', 'Bitcoin', 'Cardano'],
+                            answer: 2
+                        },
+                        {
+                            question: 'Что означает DeFi?',
+                            options: ['Цифровые финансы', 'Децентрализованные финансы', 'Прямое финансирование', 'Цифровая федерация'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Какова основная цель криптовалютного кошелька?',
+                            options: ['Покупать криптовалюту', 'Хранить открытые и закрытые ключи', 'Отслеживать цены на криптовалюты', 'Майнить новые монеты'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Что такое майнинг в криптовалюте?',
+                            options: ['Добыча физической криптовалюты', 'Процесс проверки транзакций и добавления их в блокчейн', 'Покупка криптовалюты по низким ценам', 'Создание новых криптовалютных бирж'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Что такое альткоин?',
+                            options: ['Альтернатива традиционным деньгам', 'Любая криптовалюта, кроме Биткоина', 'Тип криптовалютного кошелька', 'Криптовалюта с альтернативным использованием'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Какой механизм консенсуса использует Биткоин?',
+                            options: ['Proof-of-Stake', 'Proof-of-Work', 'Proof-of-Authority', 'Proof-of-History'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Что такое стейблкоин?',
+                            options: ['Криптовалюта со стабильной стоимостью', 'Криптовалюта, цена которой никогда не меняется', 'Физическая криптовалютная монета', 'Криптовалюта, выпущенная правительством'],
+                            answer: 0
+                        }
+                    ]
+                },
+                'investment-strategies': {
+                    title: 'Инвестиционные стратегии',
+                    questions: [
+                        {
+                            question: 'Какая инвестиционная стратегия предполагает инвестирование фиксированных сумм через регулярные промежутки времени?',
+                            options: ['Стоимостное инвестирование', 'Усреднение стоимости', 'Тайминг рынка', 'Инвестирование в рост'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Что диверсификация стремится уменьшить?',
+                            options: ['Налоги', 'Инвестиционный риск', 'Транзакционные издержки', 'Комиссии за управление'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Что характерно для хорошей долгосрочной инвестиционной стратегии?',
+                            options: ['Реагирование на ежедневные рыночные новости', 'Принятие эмоциональных решений', 'Терпение и дисциплина', 'Частая торговля'],
+                            answer: 2
+                        },
+                        {
+                            question: 'Что такое распределение активов?',
+                            options: ['Выбор отдельных акций', 'Разделение инвестиций между различными классами активов', 'Продажа активов в нужное время', 'Расчет стоимости активов'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Что такое стоп-лосс ордер?',
+                            options: ['Ордер на прекращение торговли', 'Ордер на продажу, когда акция достигает определенной цены', 'Ордер на покупку по самой низкой цене', 'Ордер на максимизацию убытков'],
+                            answer: 1
+                        },
+                        {
+                            question: 'Какая стратегия предполагает покупку недооцененных акций?',
+                            options: ['Инвестирование в рост', 'Индексное инвестирование', 'Стоимостное инвестирование', 'Инвестирование по импульсу'],
+                            answer: 2
+                        },
+                        {
+                            question: 'Что такое ребалансировка портфеля?',
+                            options: ['Покупка только новых акций', 'Продажа всех инвестиций', 'Корректировка портфеля для поддержания целевого распределения активов', 'Увеличение инвестиций в проигрышные акции'],
+                            answer: 2
+                        },
+                        {
+                            question: 'В чем основное преимущество индексных фондов?',
+                            options: ['Гарантированная доходность', 'Высокий потенциал опережения рынка', 'Низкие комиссии и широкая диверсификация', 'Активное управление экспертами'],
+                            answer: 2
+                        },
+                        {
+                            question: 'Что обычно лучше: "время на рынке" или...',
+                            options: ['Усреднение стоимости', 'Исследование рынка', 'Профессиональный совет', 'Тайминг рынка'],
+                            answer: 3
+                        },
+                        {
+                            question: 'Для чего следует использовать резервный фонд?',
+                            options: ['Инвестиции в фондовый рынок', 'Неожиданные расходы или финансовые чрезвычайные ситуации', 'Покупка криптовалют', 'Долгосрочные пенсионные сбережения'],
+                            answer: 1
+                        }
+                    ]
+                }
+            };
+
+            // Quiz state variables
+            let currentQuiz = 'stocks-basics';
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let userAnswers = [];
+
+            // Initialize quizzes
+            function initQuiz(quizId) {
+                currentQuiz = quizId;
+                currentQuestionIndex = 0;
+                score = 0;
+                userAnswers = new Array(quizData[quizId].questions.length).fill(null);
+                
+                // Hide all quiz areas and results
+                document.querySelectorAll('.quiz-area').forEach(area => {
+                    area.classList.remove('active');
+                });
+                document.getElementById('quiz-results').classList.remove('active');
+                
+                // Show selected quiz
+                document.getElementById(`${quizId}-quiz`).classList.add('active');
+                
+                // Update quiz selector buttons
+                document.querySelectorAll('.quiz-topic-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-quiz') === quizId) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                loadQuestion();
+            }
+
+            // Load current question
+            function loadQuestion() {
+                const quiz = quizData[currentQuiz];
+                const question = quiz.questions[currentQuestionIndex];
+                const quizNumber = getQuizNumber(currentQuiz);
+                
+                // Update progress
+                document.getElementById(`current-question-${quizNumber}`).textContent = currentQuestionIndex + 1;
+                document.getElementById(`score-${quizNumber}`).textContent = score;
+                
+                // Update question
+                document.getElementById(`question-${quizNumber}`).textContent = question.question;
+                
+                // Update options
+                const optionsContainer = document.getElementById(`options-${quizNumber}`);
+                optionsContainer.innerHTML = '';
+                
+                question.options.forEach((option, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'quiz-option';
+                    if (userAnswers[currentQuestionIndex] === index) {
+                        optionElement.classList.add('selected');
+                    }
+                    optionElement.textContent = option;
+                    optionElement.addEventListener('click', () => selectOption(index, quizNumber));
+                    optionsContainer.appendChild(optionElement);
+                });
+                
+                // Update button states
+                document.getElementById(`prev-btn-${quizNumber}`).disabled = currentQuestionIndex === 0;
+                
+                const nextBtn = document.getElementById(`next-btn-${quizNumber}`);
+                if (currentQuestionIndex === quiz.questions.length - 1) {
+                    nextBtn.textContent = 'Завершить тест';
+                } else {
+                    nextBtn.textContent = 'Следующий вопрос';
+                }
+            }
+
+            // Select an option
+            function selectOption(optionIndex, quizNumber) {
+                // Remove selected class from all options
+                const options = document.querySelectorAll(`#options-${quizNumber} .quiz-option`);
+                options.forEach(option => {
+                    option.classList.remove('selected', 'correct', 'incorrect');
+                });
+                
+                // Add selected class to clicked option
+                options[optionIndex].classList.add('selected');
+                
+                // Store user's answer
+                userAnswers[currentQuestionIndex] = optionIndex;
+                
+                // Check if answer is correct and update score if not already scored
+                const quiz = quizData[currentQuiz];
+                const question = quiz.questions[currentQuestionIndex];
+                
+                // If this question hasn't been answered before, check and update score
+                if (userAnswers[currentQuestionIndex] !== null && 
+                    userAnswers[currentQuestionIndex] === question.answer && 
+                    !options[optionIndex].classList.contains('scored')) {
+                    
+                    // Mark as scored to prevent duplicate scoring
+                    options[optionIndex].classList.add('scored');
+                    
+                    // Update score
+                    score++;
+                    document.getElementById(`score-${quizNumber}`).textContent = score;
+                    
+                    // Show correct/incorrect feedback
+                    options.forEach((opt, idx) => {
+                        if (idx === question.answer) {
+                            opt.classList.add('correct');
+                        } else if (idx === optionIndex && idx !== question.answer) {
+                            opt.classList.add('incorrect');
+                        }
+                    });
+                }
+            }
+
+            // Navigate to next question
+            function nextQuestion() {
+                const quiz = quizData[currentQuiz];
+                const quizNumber = getQuizNumber(currentQuiz);
+                
+                // If no answer selected, don't proceed
+                if (userAnswers[currentQuestionIndex] === null) {
+                    alert('Пожалуйста, выберите ответ перед продолжением.');
+                    return;
+                }
+                
+                if (currentQuestionIndex < quiz.questions.length - 1) {
+                    currentQuestionIndex++;
+                    loadQuestion();
+                } else {
+                    finishQuiz();
+                }
+            }
+
+            // Navigate to previous question
+            function prevQuestion() {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    loadQuestion();
+                }
+            }
+
+            // Finish quiz and show results
+            function finishQuiz() {
+                const quiz = quizData[currentQuiz];
+                const quizNumber = getQuizNumber(currentQuiz);
+                
+                // Hide quiz area
+                document.getElementById(`${currentQuiz}-quiz`).classList.remove('active');
+                
+                // Calculate final score
+                let finalScore = 0;
+                quiz.questions.forEach((question, index) => {
+                    if (userAnswers[index] === question.answer) {
+                        finalScore++;
+                    }
+                });
+                
+                // Update quiz progress
+                updateQuizProgress(currentQuiz, finalScore);
+                
+                // Show results
+                const results = document.getElementById('quiz-results');
+                results.classList.add('active');
+                
+                document.getElementById('final-score').textContent = `${finalScore}/${quiz.questions.length}`;
+                
+                // Provide feedback based on score
+                let feedback = '';
+                if (finalScore === quiz.questions.length) {
+                    feedback = 'Идеально! Вы освоили эту тему.';
+                } else if (finalScore >= quiz.questions.length * 0.7) {
+                    feedback = 'Отличная работа! У вас солидное понимание этой темы.';
+                } else if (finalScore >= quiz.questions.length * 0.5) {
+                    feedback = 'Хорошая попытка! Повторите материал, чтобы улучшить свои знания.';
+                } else {
+                    feedback = 'Продолжайте учиться! Повторите содержание и попробуйте пройти тест снова.';
+                }
+                
+                document.getElementById('results-feedback').textContent = feedback;
+            }
+
+            // Helper function to get quiz number
+            function getQuizNumber(quizId) {
+                const quizIds = ['stocks-basics', 'crypto-basics', 'investment-strategies'];
+                return quizIds.indexOf(quizId) + 1;
+            }
+
+            // Quiz selector buttons
+            document.querySelectorAll('.quiz-topic-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const quizId = this.getAttribute('data-quiz');
+                    initQuiz(quizId);
+                });
+            });
+            
+            // Quiz navigation buttons
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`next-btn-${i}`).addEventListener('click', nextQuestion);
+                document.getElementById(`prev-btn-${i}`).addEventListener('click', prevQuestion);
+            }
+            
+            // Restart quiz button
+            document.getElementById('restart-quiz').addEventListener('click', function() {
+                initQuiz(currentQuiz);
+            });
+            
+            // Initialize first quiz
+            initQuiz('stocks-basics');
+            
+            // Check if certificate was already earned
+            if (localStorage.getItem('financeLearnCertificateEarned') === 'true') {
+                certificateEarned = true;
+                document.getElementById('certificate-nav').style.display = 'block';
+                // Load previous quiz results if available
+                const savedResults = localStorage.getItem('financeLearnQuizResults');
+                if (savedResults) {
+                    quizResults = JSON.parse(savedResults);
+                    updateProgressUI();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
